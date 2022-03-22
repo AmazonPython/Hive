@@ -17,4 +17,6 @@ use Illuminate\Support\Facades\Route;
     return view('layouts.app');
 });*/
 
+Auth::routes();
+
 Route::get('/', 'PagesController@root')->name('root');
