@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return view('layouts.app');
-});*/
-
 Auth::routes(['verify' => true]);
 
-Route::get('/', 'PagesController@root')->name('root')->middleware('verified');
+Route::get('/', 'PagesController@root')->name('root');
+
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('user_addresses', 'UserAddressesController@index')->name('user_addresses.index');
+});
