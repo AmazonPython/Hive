@@ -6,10 +6,9 @@
         <div class="col-md-10 offset-lg-1">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">
-                        新增收货地址
-                    </h2>
+                    <h2 class="text-center">新增收货地址</h2>
                 </div>
+
                 <div class="card-body">
                     <!-- 输出后端报错开始 -->
                     @if (count($errors) > 0)
@@ -21,12 +20,12 @@
                                 @endforeach
                             </ul>
                         </div>
-                @endif
-                <!-- 输出后端报错结束 -->
+                    @endif
+                    <!-- 输出后端报错结束 -->
                     <!-- inline-template 代表通过内联方式引入组件 -->
                     <user-addresses-create-and-edit inline-template>
                         <form class="form-horizontal" role="form" action="{{ route('user_addresses.store') }}" method="post">
-                            <!-- 引入 csrf token 字段 -->
+                        <!-- 引入 csrf token 字段 -->
                         {{ csrf_field() }}
                         <!-- 注意这里多了 @change -->
                             <select-district @change="onDistrictChanged" inline-template>
