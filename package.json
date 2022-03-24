@@ -10,7 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@popperjs/core": "^2.10.2",
+        "@popperjs/core": "^2.11.4",
         "axios": "^0.21",
         "bootstrap": "^5.1.3",
         "laravel-mix": "^6.0.6",
@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "china-area-data": "^5.0.1"
+        "china-area-data": "^5.0.1",
+        "jquery": "^3.6.0",
+        "sweetalert": "^2.1.2"
     }
 }

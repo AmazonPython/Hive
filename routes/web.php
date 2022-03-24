@@ -27,4 +27,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('user_addresses/{user_address}', 'UserAddressesController@edit')->name('user_addresses.edit');
 
     Route::put('user_addresses/{user_address}', 'UserAddressesController@update')->name('user_addresses.update');
+
+    Route::delete('user_addresses/{user_address}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
 });
