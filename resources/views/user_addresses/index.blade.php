@@ -29,7 +29,7 @@
                                 <td>{{ $address->contact_phone }}</td>
                                 <td>
                                     <a href="{{ route('user_addresses.edit', ['user_address' => $address->id]) }}" class="btn btn-primary">修改</a>
-                                    <button class="btn btn-danger btn-del-address" type="button" data-id="{{ $address->id }}">删除</button>
+                                    <button class="btn btn-danger btn-del-address ms-2" type="button" data-id="{{ $address->id }}">删除</button>
                                 </td>
                             </tr>
                         @endforeach
