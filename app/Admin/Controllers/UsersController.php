@@ -6,7 +6,7 @@ use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Grid;
 
-class UserController extends AdminController
+class UsersController extends AdminController
 {
     protected $title = '用户';
 
