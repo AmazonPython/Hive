@@ -6,6 +6,29 @@
         <div class="col-lg-10 offset-lg-1">
             <div class="card">
                 <div class="card-body">
+                    <!-- 筛选组件开始 -->
+                    <form action="{{ route('products.index') }}" class="search-form">
+                        <div class="row g-2">
+                            <div class="col-md-9">
+                                <div class="row g-2">
+                                    <div class="col-auto"><input type="text" class="form-control form-control-sm" name="search" placeholder="搜索"></div>
+                                    <div class="col-auto"><button class="btn btn-primary btn-sm">搜索</button></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select name="order" class="form-control form-control-sm float-right">
+                                    <option value="">排序方式</option>
+                                    <option value="price_asc">价格从低到高</option>
+                                    <option value="price_desc">价格从高到低</option>
+                                    <option value="sold_count_desc">销量从高到低</option>
+                                    <option value="sold_count_asc">销量从低到高</option>
+                                    <option value="rating_desc">评价从高到低</option>
+                                    <option value="rating_asc">评价从低到高</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- 筛选组件结束 -->
                     <div class="row products-list">
                         @foreach($products as $product)
                             <div class="col-3 product-item">
@@ -15,6 +38,7 @@
                                         <div class="price"><b>￥</b>{{ $product->price }}</div>
                                         <div class="title">{{ $product->title }}</div>
                                     </div>
+
                                     <div class="bottom">
                                         <div class="sold_count">销量 <span>{{ $product->sold_count }}笔</span></div>
                                         <div class="review_count">评价 <span>{{ $product->review_count }}</span></div>
@@ -23,10 +47,24 @@
                             </div>
                         @endforeach
                     </div>
-
-                    <div class="float-end">{{ $products->render() }}</div>
+                    <!-- 分页 -->
+                    <div class="float-end">{{ $products->appends($filters)->render() }}</div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scriptsAfterJs')
+    <script>
+        // 把 $fillter 变量渲染到当前页面中
+        var filters = {!! json_encode($filters) !!};
+        $(document).ready(function () {
+            $('.search-form input[name=search]').val(filters.search);
+            // 如果 filters.order 有值，则选中
+            $('.search-form select[name=order]').on('change', function() {
+                $('.search-form').submit();
+            });
+        })
+    </script>
 @endsection
