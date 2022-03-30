@@ -11,8 +11,12 @@
                         <div class="row g-2">
                             <div class="col-md-9">
                                 <div class="row g-2">
-                                    <div class="col-auto"><input type="text" class="form-control form-control-sm" name="search" placeholder="搜索"></div>
-                                    <div class="col-auto"><button class="btn btn-primary btn-sm">搜索</button></div>
+                                    <div class="col-auto">
+                                        <input type="text" class="form-control form-control-sm" name="search" placeholder="搜索">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn btn-primary btn-sm">搜索</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -34,11 +38,18 @@
                             <div class="col-3 product-item">
                                 <div class="product-content">
                                     <div class="top">
-                                        <div class="img"><img src="{{ $product->image_url }}" alt=""></div>
+                                        <div class="img">
+                                            <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                                                <img src="{{ $product->image_url }}" alt="{{ $product->title }}">
+                                            </a>
+                                        </div>
                                         <div class="price"><b>￥</b>{{ $product->price }}</div>
-                                        <div class="title">{{ $product->title }}</div>
+                                        <div class="title">
+                                            <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                                                {{ $product->title }}
+                                            </a>
+                                        </div>
                                     </div>
-
                                     <div class="bottom">
                                         <div class="sold_count">销量 <span>{{ $product->sold_count }}笔</span></div>
                                         <div class="review_count">评价 <span>{{ $product->review_count }}</span></div>

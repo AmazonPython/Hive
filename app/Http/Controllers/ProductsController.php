@@ -11,8 +11,7 @@ class ProductsController extends Controller
     {
         // 创建一个查询构造器
         $builder = Product::query()->where('on_sale', true);
-        // 判断是否有提交 search 参数，如果有就赋值给 $search 变量
-        // search 参数用来模糊搜索商品
+        // 判断是否有提交 search 参数，如果有就赋值给 $search 变量。search 参数用来模糊搜索商品
         if ($search = $request->input('search', '')) {
             $like = '%' . $search . '%';
             // 模糊搜索商品标题、商品详情、SKU 标题、SKU描述
@@ -26,8 +25,7 @@ class ProductsController extends Controller
             });
         }
 
-        // 是否有提交 order 参数，如果有就赋值给 $order 变量
-        // order 参数用来控制商品的排序规则
+        // 是否有提交 order 参数，如果有就赋值给 $order 变量。order 参数用来控制商品的排序规则
         if ($order = $request->input('order', '')) {
             // 是否是以 _asc 或者 _desc 结尾
             if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
@@ -50,8 +48,13 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show(Product $product, Request $request)
     {
-        return view('products.show');
+        // 判断商品是否已经上架，如果没有上架则抛出异常。
+        if (!$product->on_sale) {
+            throw new \Exception('商品未上架');
+        }
+
+        return view('products.show', compact('product'));
     }
 }
