@@ -22,16 +22,17 @@
                             </div>
                             <div class="skus">
                                 <label>选择</label>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
                                     @foreach($product->skus as $sku)
-                                        <label class="btn sku-btn" title="{{ $sku->description }}" data-price="{{ $sku->price }}" data-stock="{{ $sku->stock }}" data-toggle="tooltip" data-placement="bottom">
+                                        <label class="btn sku-btn" title="{{ $sku->description }}" data-price="{{ $sku->price }}" data-stock="{{ $sku->stock }}" data-bs-toggle="tooltip" data-placement="bottom">
                                             <input type="radio" name="skus" autocomplete="off" value="{{ $sku->id }}"> {{ $sku->title }}
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
                             <div class="cart_amount">
-                                <label>数量</label><input type="text" class="form-control form-control-sm" value="1"><span>件</span><span class="stock"></span>
+                                <label>数量</label>
+                                <input type="text" class="form-control form-control-sm" value="1"><span>件</span><span class="stock"></span>
                             </div>
                             <div class="buttons">
                                 <button class="btn btn-success btn-favor">❤ 收藏</button>
@@ -42,10 +43,10 @@
                     <div class="product-detail">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#product-detail-tab" aria-controls="product-detail-tab" role="tab" data-toggle="tab" aria-selected="true">商品详情</a>
+                                <a class="nav-link active" href="#product-detail-tab" aria-controls="product-detail-tab" role="tab" data-bs-toggle="tab" aria-selected="true">商品详情</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#product-reviews-tab" aria-controls="product-reviews-tab" role="tab" data-toggle="tab" aria-selected="false">用户评价</a>
+                                <a class="nav-link" href="#product-reviews-tab" aria-controls="product-reviews-tab" role="tab" data-bs-toggle="tab" aria-selected="false">用户评价</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -66,7 +67,7 @@
     <script>
         // 当点击 .sku-btn 时，我们需要获取当前点击商品的 sku，然后根据它的属性获取对应的商品属性
         $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip({trigger: 'hover'});
+            $('[data-bs-toggle="tooltip"]').tooltip({trigger: 'hover'});
             $('.sku-btn').click(function () {
                 $('.product-info .price span').text($(this).data('price'));
                 $('.product-info .stock').text('库存：' + $(this).data('stock') + '件');
