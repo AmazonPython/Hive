@@ -9,6 +9,8 @@
     <title>@yield('title', 'Hive Store') - {{ config('app.name', 'Laravel') }}</title>
     <!-- 样式 -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <!-- icon -->
+    <link href="{{ asset('favicon.png') }}" sizes="48x48" rel="icon">
 </head>
 <body>
 <div id="app" class="{{ route_class() }}-page">
