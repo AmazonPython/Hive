@@ -14,30 +14,33 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes(['verify' => true]);
-
+// 路由跳转
 Route::redirect('/', '/products')->name('root');
 
 // 商品列表页
 Route::get('products', 'ProductsController@index')->name('products.index');
-
-Route::get('products/{product}', 'ProductsController@show')->name('products.show');
+// 商品详情页
+// restful 查看，product仅支持数整，当id规则变更后，只需更改正则条件
+Route::get('products/{product}', 'ProductsController@show')->name('products.show')->where('product', '[0-9]+');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     // 用户收货地址
     Route::get('user_addresses', 'UserAddressesController@index')->name('user_addresses.index');
-
+    // 新增收货地址
     Route::get('user_addresses/create', 'UserAddressesController@create')->name('user_addresses.create');
-
+    // 保存收货地址
     Route::post('user_addresses', 'UserAddressesController@store')->name('user_addresses.store');
-
+    // 编辑收货地址
     Route::get('user_addresses/{user_address}', 'UserAddressesController@edit')->name('user_addresses.edit');
-
+    // 更新收货地址
     Route::put('user_addresses/{user_address}', 'UserAddressesController@update')->name('user_addresses.update');
-
+    // 删除收货地址
     Route::delete('user_addresses/{user_address}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
 
     // 收藏商品与取消收藏
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
-
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+
+    // 收藏商品列表
+    Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 });
