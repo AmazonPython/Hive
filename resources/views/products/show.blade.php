@@ -90,7 +90,7 @@
                         if (error.response && error.response.status === 401) {
                             swal('请先登录', '', 'error');
                         } else if (error.response && error.response.status === 403) {
-                            swal('您的邮箱地址未验证','','error');
+                            swal('您的邮箱地址未验证', '', 'error');
                         }  else {
                             // 其他情况应该是系统挂了
                             swal('系统错误', '', 'error');
@@ -113,7 +113,7 @@
             $('.btn-add-to-cart').click(function () {
                 // 请求加入购物车接口
                 axios.post('{{ route('cart.add') }}', {
-                    sku_id: $('label.active input[name=skus]').val(),
+                    sku_id: $('.sku-btn input[name=skus]:checked').val(),
                     amount: $('.cart_amount input').val(),
                 })
                     .then(function () { // 请求成功执行此回调
@@ -132,6 +132,8 @@
                             });
                             html += '</div>';
                             swal({content: $(html)[0], icon: 'error'})
+                        } else if (error.response && error.response.status === 403) {
+                            swal('您的邮箱地址未验证', '', 'error');
                         } else {
                             // 其他情况应该是系统挂了
                             swal('系统错误', '', 'error');
