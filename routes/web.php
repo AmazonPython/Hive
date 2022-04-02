@@ -40,10 +40,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // 收藏商品与取消收藏
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
-
     // 收藏商品列表
     Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 
     // 添加购物车
     Route::post('cart', 'CartController@add')->name('cart.add');
+    // 购物车列表
+    Route::get('cart', 'CartController@index')->name('cart.index');
+    // 删除购物车
+    Route::delete('cart/{sku}', 'CartController@remove')->name('cart.remove');
 });
