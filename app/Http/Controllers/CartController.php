@@ -15,7 +15,15 @@ class CartController extends Controller
         // 预加载获取购物车中的商品信息，避免重复查询
         $cartItems = $request->user()->cartItems()->with(['productSku.product'])->get();
 
-        return view('cart.index', compact('cartItems'));
+        // 获取总金额
+        $total = 0;
+        foreach($cartItems as $item) {
+            if ($item->productSku->product->on_sale) {
+                $total += $item->productSku->price * $item->amount;
+            }
+        }
+
+        return view('cart.index', compact('cartItems', 'total'));
     }
 
     // 将商品添加到购物车

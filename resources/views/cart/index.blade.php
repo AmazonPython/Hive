@@ -52,6 +52,13 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <table class="table table-striped">
+                        <thread>
+                            <tr>
+                                <th>总价：￥{{ $total }}</th>
+                            </tr>
+                        </thread>
+                    </table>
                 </div>
             </div>
         </div>
