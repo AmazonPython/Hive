@@ -26,7 +26,7 @@
                                 <td class="product_info">
                                     <div class="preview">
                                         <a target="_blank" href="{{ route('products.show', [$item->productSku->product_id]) }}">
-                                            <img src="{{ $item->productSku->product->image_url }}">
+                                            <img src="{{ $item->productSku->product->image_url }}" alt="{{ $item->productSku->product->title }}">
                                         </a>
                                     </div>
                                     <div @if(!$item->productSku->product->on_sale) class="not_on_sale" @endif>
