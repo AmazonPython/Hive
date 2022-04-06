@@ -232,4 +232,5 @@ return [
 
     ],
 
+    'order_ttl' => 600,
 ];
