@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
+    // 查看订单列表
     public function index(Request $request)
     {
         $orders = Order::query()
@@ -25,6 +26,16 @@ class OrdersController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+    // 查看订单详情
+    public function show(Order $order, Request $request)
+    {
+        $this->authorize('own', $order);
+
+        // 延迟加载，避免N + 1问题
+        return view('orders.show', ['order' => $order->load(['items.productSku', 'items.product'])]);
+    }
+
+    // 创建订单
     public function store(OrderRequest $request)
     {
         $user = $request->user();
