@@ -11,16 +11,32 @@ use App\Services\OrderService;
 class OrdersController extends Controller
 {
     // 查看订单列表
-    public function index(Request $request)
+    public function index($id, Request $request)
     {
+        // 设置自定义分页页面信息
+        $paginate = 5; // 每页显示数量
+        $skip = ($id*$paginate)-$paginate; // 跳过数量
+        $prevUrl = $nextUrl = ''; // 分页链接
+        if($skip > 0){ // 如果跳过数量大于0，则设置上一页链接
+            $prevUrl = $id - 1;
+        }
+
         $orders = Order::query()
             // 使用 with 方法预加载，避免N + 1问题
             ->with(['items.product', 'items.productSku'])
             ->where('user_id', $request->user()->id)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->skip($skip)->take($paginate)->get();
 
-        return view('orders.index', compact('orders'));
+        if($orders->count() > 0){ // 如果订单数量大于0，则设置下一页链接
+            if($orders->count() >= $paginate){
+                $nextUrl = $id + 1;
+            }
+
+            return view('orders.index', compact('orders', 'prevUrl', 'nextUrl'));
+        }
+
+        return view('orders.index', compact('orders', 'prevUrl', 'nextUrl'));
     }
 
     // 查看订单详情

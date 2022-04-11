@@ -7,6 +7,9 @@
             <div class="card">
                 <div class="card-header">订单列表</div>
                 <div class="card-body">
+                    @if($orders->count() === 0)
+                        <div class="empty-block">没有查询到相关订单！</div>
+                    @else
                     <ul class="list-group">
                         @foreach($orders as $order)
                             <li class="list-group-item">
@@ -77,7 +80,18 @@
                             </li>
                         @endforeach
                     </ul>
-                    <div class="float-end">{{ $orders->render() }}</div>
+                    <!-- 分页 -->
+                    <div class="pagination float-start">
+                        @if($prevUrl)
+                            <a class="btn btn-info" href="{{ route('orders.index', $prevUrl) }}"><i class="fa fa-angle-left" aria-hidden="true"></i> 上一页</a>
+                        @endif
+                    </div>
+                    <div class="pagination float-end">
+                        @if($nextUrl)
+                            <a class="btn btn-info" href="{{ route('orders.index', $nextUrl) }}">下一页 <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        @endif
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
