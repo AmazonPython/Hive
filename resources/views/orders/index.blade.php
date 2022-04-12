@@ -8,7 +8,10 @@
                 <div class="card-header">订单列表</div>
                 <div class="card-body">
                     @if($orders->count() === 0)
-                        <div class="empty-block">没有查询到相关订单！</div>
+                        <div class="empty-block mb-2">
+                            没有查询到相关订单，<a class="btn btn-sm btn-info" href="{{ route('products.index') }}">去逛逛吧 <i class="fa fa-shopping-cart"></i></a>
+                        </div>
+                        <img src="https://thiscatdoesnotexist.com/" width="50%" alt="404 not found">
                     @else
                     <ul class="list-group">
                         @foreach($orders as $order)

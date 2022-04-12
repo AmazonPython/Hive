@@ -12,6 +12,7 @@ class ProductsController extends Controller
     {
         // 创建一个查询构造器
         $builder = Product::query()->where('on_sale', true);
+
         // 判断是否有提交 search 参数，如果有就赋值给 $search 变量。search 参数用来模糊搜索商品
         if ($search = $request->input('search', '')) {
             $like = '%' . $search . '%';
@@ -57,6 +58,7 @@ class ProductsController extends Controller
         }
 
         $favored = false;
+
         // 用户未登录时返回的是 null，已登录时返回的是对应的用户对象
         if($user = $request->user()) {
             // 从当前用户已收藏的商品中搜索 id 为当前商品 id 的商品
