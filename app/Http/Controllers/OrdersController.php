@@ -15,11 +15,15 @@ class OrdersController extends Controller
     {
         // 设置自定义分页页面信息
         $paginate = 5; // 每页显示数量
-        $skip = ($id*$paginate)-$paginate; // 跳过数量
+        $skip = ($id * $paginate) - $paginate; // 跳过数量
         $prevUrl = $nextUrl = ''; // 分页链接
         if($skip > 0){ // 如果跳过数量大于0，则设置上一页链接
             $prevUrl = $id - 1;
         }
+        // 尾页页码
+        $lastUrl = ceil(Order::query()->where('user_id', $request->user()->id)->count() / $paginate);
+        // 订单总数
+        $total = Order::query()->where('user_id', $request->user()->id)->count();
 
         $orders = Order::query()
             // 使用 with 方法预加载，避免N + 1问题
@@ -29,14 +33,17 @@ class OrdersController extends Controller
             ->skip($skip)->take($paginate)->get();
 
         if($orders->count() > 0){ // 如果订单数量大于0，则设置下一页链接
-            if($orders->count() >= $paginate){
-                $nextUrl = $id + 1;
+            if($orders->count() >= $paginate){// 如果订单数量大于等于每页显示数量，则设置下一页链接
+                // 如果当前页码小于最后一页，则设置下一页链接
+                if($id < $lastUrl){
+                    $nextUrl = $id + 1;
+                }
             }
 
-            return view('orders.index', compact('orders', 'prevUrl', 'nextUrl'));
+            return view('orders.index', compact('orders', 'prevUrl', 'nextUrl', 'lastUrl', 'total'));
         }
 
-        return view('orders.index', compact('orders', 'prevUrl', 'nextUrl'));
+        return view('orders.index', compact('orders', 'prevUrl', 'nextUrl', 'lastUrl', 'total'));
     }
 
     // 查看订单详情

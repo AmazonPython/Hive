@@ -102,10 +102,33 @@ class ProductsController extends Controller
     }
 
     // 商品收藏列表页面
-    public function favorites(Request $request)
+    public function favorites($id, Request $request)
     {
-        $products = $request->user()->favoriteProducts()->paginate(16);
+        // 设置自定义分页页面信息
+        $paginate = 2; // 每页显示数量
+        $skip = ($id * $paginate) - $paginate; // 跳过数量
+        $prevUrl = $nextUrl = ''; // 分页链接
+        if($skip > 0){ // 如果跳过数量大于0，则设置上一页链接
+            $prevUrl = $id - 1;
+        }
+        // 收藏物品总数
+        $total = $request->user()->favoriteProducts()->count();
+        // 尾页页码
+        $lastUrl = ceil($request->user()->favoriteProducts()->count() / $paginate);
 
-        return view('products.favorites', compact('products'));
+        $products = $request->user()->favoriteProducts()->skip($skip)->take($paginate)->get();
+
+        if($products->count() > 0){ // 如果订单数量大于0，则设置下一页链接
+            if($products->count() >= $paginate){// 如果订单数量大于等于每页显示数量，则设置下一页链接
+                // 如果当前页码小于最后一页，则设置下一页链接
+                if($id < $lastUrl){
+                    $nextUrl = $id + 1;
+                }
+            }
+
+            return view('products.favorites', compact('products', 'prevUrl', 'nextUrl', 'lastUrl', 'total'));
+        }
+
+        return view('products.favorites', compact('products', 'prevUrl', 'nextUrl', 'lastUrl', 'total'));
     }
 }

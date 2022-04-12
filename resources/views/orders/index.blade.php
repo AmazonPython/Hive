@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-lg-10 offset-lg-1">
             <div class="card">
-                <div class="card-header">订单列表</div>
+                <div class="card-header">
+                    {{ Auth::user()->name }} 的订单<a class="products-orders-counts ms-4">共 {{ $total }}条</a>
+                </div>
                 <div class="card-body">
                     @if($orders->count() === 0)
                         <div class="empty-block mb-2">
@@ -86,13 +88,15 @@
                     <!-- 分页 -->
                     <div class="pagination float-start">
                         @if($prevUrl)
-                            <a class="btn btn-info" href="{{ route('orders.index', $prevUrl) }}"><i class="fa fa-angle-left" aria-hidden="true"></i> 上一页</a>
+                            <a class="btn btn-info" href="{{ route('orders.index', 1) }}">首页</a>
+                            <a class="btn btn-info ms-2" href="{{ route('orders.index', $prevUrl) }}"><i class="fa fa-angle-left" aria-hidden="true"></i> 上一页</a>
                         @endif
                     </div>
                     <div class="pagination float-end">
                         @if($nextUrl)
-                            <a class="btn btn-info" href="{{ route('orders.index', $nextUrl) }}">下一页 <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                            <a class="btn btn-info me-2" href="{{ route('orders.index', $nextUrl) }}">下一页 <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                         @endif
+                        <a class="btn btn-info" href="{{ route('orders.index', $lastUrl) }}">末页</a>
                     </div>
                     @endif
                 </div>

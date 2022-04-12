@@ -293,6 +293,11 @@ body {
 }
 
 .orders-index-page {
+    .products-orders-counts{
+        color: #b57c5b;
+        font-weight: bold;
+        text-decoration: none;
+    }
     .list-group-item {
         font-size: 12px;
         border: none;
