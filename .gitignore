@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/resources/wechat_pay
 .env
 .env.backup
 .phpunit.result.cache
