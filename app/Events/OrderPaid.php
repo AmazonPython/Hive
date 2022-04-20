@@ -27,6 +27,7 @@ class OrderPaid
         $this->order = $order;
     }
 
+    // 定义一个事件处理器来处理订单支付事件
     public function getOrder()
     {
         return $this->order;
