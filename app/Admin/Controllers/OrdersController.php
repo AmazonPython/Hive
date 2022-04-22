@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Exceptions\InvalidRequestException;
+use App\Jobs\AutoReceive;
 use App\Models\Order;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Grid;
@@ -98,6 +99,8 @@ class OrdersController extends AdminController
             'ship_data'   => $data,
         ]);
 
+        // 30天自动收货
+        dispatch(new AutoReceive($order, config('app.auto_receive_ttl')));
         // 返回上一页
         return redirect()->back();
     }

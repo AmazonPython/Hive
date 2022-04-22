@@ -2,21 +2,26 @@
 
 namespace App\Jobs;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Order;
 
 // 代表这个类需要被放到队列中执行，而不是触发时立即执行
-class CloseOrder implements ShouldQueue
+class AutoReceive implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $order;
 
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
     public function __construct(Order $order, $delay)
     {
         $this->order = $order;
@@ -31,19 +36,15 @@ class CloseOrder implements ShouldQueue
      */
     public function handle()
     {
-        // 判断对应的订单是否已经被支付
-        // 如果已经支付则不需要关闭订单，直接退出
-        if ($this->order->paid_at) {
+        // 判断对应的订单是否已经被收货
+        // 如果已经收货则不需要确认收货，直接退出
+        if ($this->order->ship_status === Order::SHIP_STATUS_RECEIVED) {
             return;
         }
         // 通过事务执行 sql
-        \DB::transaction(function() {
-            // 将订单的 closed 字段标记为 true，即关闭订单
-            $this->order->update(['closed' => true]);
-            // 循环遍历订单中的商品 SKU，将订单中的数量加回到 SKU 的库存中去
-            foreach ($this->order->items as $item) {
-                $item->productSku->addStock($item->amount);
-            }
+        \DB::transaction(function () {
+            // 更新订单的状态改为已收货
+            $this->order->update(['ship_status' => Order::SHIP_STATUS_RECEIVED]);
         });
     }
 }
