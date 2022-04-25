@@ -98,6 +98,12 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="line">
+                                @if(isset($order->extra['refund_disagree_reason']))
+                                    <div class="line-label">拒绝原因：</div>
+                                    <div class="line-value">{{ $order->extra['refund_disagree_reason'] }}</div>
+                                @endif
+                            </div>
                             <!-- 支付按钮开始 -->
                             @if(!$order->paid_at && !$order->closed)
                             <div class="payment-buttons">

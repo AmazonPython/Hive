@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Exceptions\InvalidRequestException;
+use App\Http\Requests\Admin\HandleRefundRequest;
 use App\Jobs\AutoReceive;
 use App\Models\Order;
 use Encore\Admin\Controllers\AdminController;
@@ -70,6 +71,7 @@ class OrdersController extends AdminController
             ->body(view('admin.orders.show', ['order' => Order::find($id)]));
     }
 
+    // 发货与自动收货
     public function ship(Order $order, Request $request)
     {
         // 判断当前订单是否已支付
@@ -103,5 +105,42 @@ class OrdersController extends AdminController
         dispatch(new AutoReceive($order, config('app.auto_receive_ttl')));
         // 返回上一页
         return redirect()->back();
+    }
+
+    // 拒绝退款
+    public function handleRefund(Order $order, HandleRefundRequest $request)
+    {
+        // 判断当前订单是否已经付款
+        if (!$order->paid_at) {
+            throw new InvalidRequestException('该订单未付款');
+        }
+
+        // 判断当前订单退款状态是否正确
+        if ($order->refund_status !== Order::REFUND_STATUS_APPLIED) {
+            throw new InvalidRequestException('该订单退款状态不正确');
+        }
+
+        // 是否同意退款
+        if ($request->input('agree')) {
+            // 清空拒绝退款理由
+            $extra = $order->extra ?: [];
+            unset($extra['refund_disagree_reason']);
+            $order->update([
+                'extra' => $extra,
+            ]);
+            // 调用退款逻辑
+            $this->_refundOrder($order);
+        } else {
+            // 将拒绝退款理由放到订单的 extra 字段中
+            $extra = $order->extra ?: [];
+            $extra['refund_disagree_reason'] = $request->input('reason');
+            // 将订单的退款状态改为未退款
+            $order->update([
+                'refund_status' => Order::REFUND_STATUS_PENDING,
+                'extra'         => $extra,
+            ]);
+        }
+
+        return $order;
     }
 }
