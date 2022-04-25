@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class Order extends Model
 {
@@ -112,5 +113,18 @@ class Order extends Model
         \Log::warning('find order no failed');
 
         return false;
+    }
+
+    // 生成订单退款单号
+    public static function getAvailableRefundNo()
+    {
+        do {
+            // UUID 生成 24 位的唯一字符串
+            $no = Uuid::uuid4()->getHex();
+            // 当生成不重复的退款订单号时，返回退款订单号
+            if (!static::query()->where('refund_no', $no)->exists()) {
+                return $no;
+            }
+        } while (true);
     }
 }
