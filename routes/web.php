@@ -81,3 +81,6 @@ Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('pa
 
 // 微信支付异步通知
 Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
+
+// 微信支付退款异步通知
+Route::post('payment/wechat/refund_notify', 'PaymentController@wechatRefundNotify')->name('payment.wechat.refund_notify');

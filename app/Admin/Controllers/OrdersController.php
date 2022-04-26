@@ -151,8 +151,20 @@ class OrdersController extends AdminController
         // 判断该订单的支付方式
         switch ($order->payment_method) {
             case 'wechat':
-                // 微信的先留空
-                // todo
+                // 生成退款订单号
+                $refundNo = Order::getAvailableRefundNo();
+                app('wechat_pay')->refund([
+                    'out_trade_no' => $order->no, // 之前的订单流水号
+                    'total_fee' => $order->total_amount * 100, //原订单金额，单位分
+                    'refund_fee' => $order->total_amount * 100, // 要退款的订单金额，单位分
+                    'out_refund_no' => $refundNo, // 退款订单号
+                    'notify_url' => ngrok_url('payment.wechat.refund_notify'), // 异步通知地址
+                ]);
+                // 将订单状态改成退款中
+                $order->update([
+                    'refund_no' => $refundNo,
+                    'refund_status' => Order::REFUND_STATUS_PROCESSING,
+                ]);
                 break;
             case 'alipay':
                 // 用我们刚刚写的方法来生成一个退款订单号
