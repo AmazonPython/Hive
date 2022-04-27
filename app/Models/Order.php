@@ -127,4 +127,9 @@ class Order extends Model
             }
         } while (true);
     }
+
+    public function couponCode()
+    {
+        return $this->belongsTo(CouponCode::class);
+    }
 }
