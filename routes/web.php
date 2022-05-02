@@ -74,6 +74,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // 退款
     Route::post('orders/{order}/apply_refund', 'OrdersController@applyRefund')->name('orders.apply_refund');
+
+    // 优惠码列表
+    Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
 });
 
 // 支付宝异步通知
