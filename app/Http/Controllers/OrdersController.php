@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\OrderReviewed;
+use App\Exceptions\CouponCodeUnavailableException;
 use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\ApplyRefundRequest;
 use App\Http\Requests\OrderRequest;
@@ -74,7 +75,7 @@ class OrdersController extends Controller
             $coupon = CouponCode::where('code', $code)->first();
             // 如果优惠码不存在
             if(!$coupon){
-                throw new InvalidRequestException('优惠码不存在，或者已被使用，或者已过期');
+                throw new CouponCodeUnavailableException('优惠券不存在');
             }
         }
 
