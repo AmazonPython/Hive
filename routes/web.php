@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// 欢迎页
+Route::get('/welcome', function () {
+    return view('welcome');
+})->name('welcome');
 
 Auth::routes(['verify' => true]);
 // 路由跳转
