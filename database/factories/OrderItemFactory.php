@@ -25,7 +25,6 @@ class OrderItemFactory extends Factory
         return [
             'amount'         => random_int(1, 3), // 随机购买数量
             'price'          => $sku->price,
-            'total_amount'   => $sku->price * random_int(1, 3),
             'rating'         => null,
             'review'         => null,
             'reviewed_at'    => null,

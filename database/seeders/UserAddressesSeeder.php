@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Antvel\Users\Models\User;
+use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Database\Seeder;
 
