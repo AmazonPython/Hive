@@ -39,4 +39,9 @@ class Product extends Model
         // 否则使用 Storage 的 url 拼接方式返回
         return \Storage::disk('public')->url($this->attributes['image']);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
