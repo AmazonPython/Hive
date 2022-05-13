@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->comment('类目名称');
-            $table->unsignedBigInteger('parent_id')->comment('父类ID');
+            $table->unsignedBigInteger('parent_id')->nullable()->comment('父类ID');
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
             $table->boolean('is_directory')->comment('是否拥有子类');
             $table->unsignedBigInteger('level')->comment('当前类目层级');

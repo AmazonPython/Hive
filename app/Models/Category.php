@@ -26,22 +26,25 @@ class Category extends Model
                 $category->path = '-';
             } else {
                 // 将层级设为父类目 +1，path 设为父类目的 path 追加父类目 ID，以 '-' 分隔
-                $category->level = $category->parent_level + 1;
-                $category->path = $category->parent_path . $category->parent_id . '-';
+                $category->level = $category->parent->level + 1;
+                $category->path = $category->parent->path . $category->parent_id . '-';
             }
         });
     }
 
+    // 关联父类目
     public function parent()
     {
         return $this->belongsTo(Category::class);
     }
 
+    // 关联到当前类目的商品
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
 
+    // 关联到商品的属性
     public function products()
     {
         return $this->hasMany(Product::class);
