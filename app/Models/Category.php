@@ -73,7 +73,7 @@ class Category extends Model
     // 定义一个访问器，获取以 - 为分隔符的所有祖先类目名称和当前类目名称
     public function getFullNameAttribute()
     {
-        return $this->ancestor // 获取所有祖先类目
+        return $this->ancestors // 获取所有祖先类目
             ->pluck('name') // 取出所有祖先类目的 name 字段作为一个数组
             ->push($this->name) // 将当前类目的 name 字段值加到数组末尾
             ->implode('-'); // 用 - 符号将数组的值组装成一个字符串
