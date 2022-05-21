@@ -21,8 +21,8 @@
                             @each('layouts._category_item', $categoryTree, 'category')
                         </ul>
                     </li>
-            @endif
-            <!-- 顶部类目菜单结束 -->
+                @endif
+                <!-- 顶部类目菜单结束 -->
             </ul>
 
             <!-- Right Side Of Navbar -->
