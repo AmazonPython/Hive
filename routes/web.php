@@ -81,6 +81,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // 优惠码列表
     Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
+
+    // 众筹商品下单
+    Route::post('crowdfunding_orders', 'OrdersController@crowdfunding')->name('crowdfunding_orders.store');
 });
 
 // 支付宝异步通知
