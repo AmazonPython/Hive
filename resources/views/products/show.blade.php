@@ -235,7 +235,7 @@
                 $form.append('<div class="form-group row">' +
                     '<label class="col-form-label col-sm-3">选择地址</label>' +
                     '<div class="col-sm-9">' +
-                    '<select class="custom-select" name="address_id"></select>' +
+                    '<select class="form-control" name="address_id"></select>' +
                     '</div></div>');
                 // 循环每个收货地址
                 addresses.forEach(function (address) {

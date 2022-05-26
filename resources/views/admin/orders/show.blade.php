@@ -24,7 +24,12 @@
             </tr>
             <tr>
                 <td>收货地址</td>
-                <td colspan="3">{{ $order->address['address'] }} {{ $order->address['zip'] }} {{ $order->address['contact_name'] }} {{ $order->address['contact_phone'] }}</td>
+                <td colspan="3">
+                    {{ $order->address['address'] }}
+                    {{ $order->address['zip'] }}
+                    {{ $order->address['contact_name'] }}
+                    {{ $order->address['contact_phone'] }}
+                </td>
             </tr>
             <tr>
                 <td rowspan="{{ $order->items->count() + 1 }}">商品列表</td>
@@ -50,7 +55,9 @@
             <!-- 如果订单未发货，展示发货表单 -->
             @if($order->ship_status === \App\Models\Order::SHIP_STATUS_PENDING)
                 <!-- 已退款订单隐藏发货表单 -->
-                @if($order->refund_status !== \App\Models\Order::REFUND_STATUS_SUCCESS)
+                @if($order->refund_status !== \App\Models\Order::REFUND_STATUS_SUCCESS &&
+                    ($order->type !== \App\Models\Order::TYPE_CROWDFUNDING ||
+                    $order->items[0]->product->crowdfunding->status === \App\Models\CrowdfundingProduct::STATUS_SUCCESS))
                 <tr>
                     <td colspan="4">
                         <form action="{{ route('admin.orders.ship', [$order->id]) }}" method="post" class="form-inline">
@@ -93,7 +100,9 @@
             @if($order->refund_status !== \App\Models\Order::REFUND_STATUS_PENDING)
                 <tr>
                     <td>退款状态：</td>
-                    <td colspan="2">{{ \App\Models\Order::$refundStatusMap[$order->refund_status] }}，理由：{{ $order->extra['refund_reason'] }}</td>
+                    <td colspan="2">
+                        {{ \App\Models\Order::$refundStatusMap[$order->refund_status] }}，理由：{{ $order->extra['refund_reason'] }}
+                    </td>
                     <td>
                         <!-- 如果订单退款状态是已申请，则展示处理按钮 -->
                         @if($order->refund_status === \App\Models\Order::REFUND_STATUS_APPLIED)
