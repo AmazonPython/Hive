@@ -34,7 +34,7 @@ class UpdateCrowdfundingProductProgress implements ShouldQueue
             })
             ->first([
                 \DB::raw('sum(total_amount) as total_amount'), // 取出总金额
-                \DB::raw('count(distinct(users.id)) as user_count'), // 取出去重的用户数量
+                \DB::raw('count(distinct(user_id)) as user_count'), // 取出去重的用户数量
             ]);
 
         // 更新众筹商品的进度
