@@ -15,6 +15,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "moontoast/math": "^1.2",
         "symfony/mailer": "^5.4",
         "yansongda/pay": "2.10.2"
     },
