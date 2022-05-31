@@ -24,7 +24,7 @@ class CreateInstallmentsTable extends Migration
             $table->unsignedInteger('count')->comment('还款期数');
             $table->float('fee_rate')->comment('手续费率');
             $table->float('fine_rate')->comment('逾期费率');
-            $table->string('status')->comment('还款状态');
+            $table->string('status')->default(\App\Models\Installment::STATUS_PENDING)->comment('还款状态');
             $table->timestamps();
         });
     }

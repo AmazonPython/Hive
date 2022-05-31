@@ -84,6 +84,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // 众筹商品下单
     Route::post('crowdfunding_orders', 'OrdersController@crowdfunding')->name('crowdfunding_orders.store');
+
+    // 分期付款
+    Route::post('payment/{order}/installment', 'PaymentController@payByInstallment')->name('payment.installment');
 });
 
 // 支付宝异步通知

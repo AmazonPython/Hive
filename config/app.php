@@ -240,4 +240,17 @@ return [
 
     // 自动收货时间，超过后订单状态会变更为已完成。单位：秒
     'auto_receive_ttl' => 2592000,
+
+    // 分期付款费率，key为分期期数，value为费率，单位：%
+    'installment_fee_rate' => [
+        '3' => 1.5,
+        '6' => 2,
+        '12' => 2.5,
+    ],
+
+    // 最低分期金额，单位：元
+    'min_installment_amount' => '300',
+
+    // 逾期费率，单位：%
+    'installment_fine_rate' => 0.05,
 ];
