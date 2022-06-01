@@ -12,6 +12,6 @@ class InstallmentPolicy
 
     public function own(User $user, Installment $installment)
     {
-        return $user->id === $installment->user_id;
+        return $installment->user_id == $user->id;
     }
 }
