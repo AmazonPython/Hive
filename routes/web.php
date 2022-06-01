@@ -92,10 +92,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('installments', 'InstallmentsController@index')->name('installments.index');
     // 分期付款详情页
     Route::get('installments/{installment}', 'InstallmentsController@show')->name('installments.show');
-    // 分期付款支付
+    // 分期付款支付宝支付
     Route::get('installments/{installment}/alipay', 'InstallmentsController@payByAlipay')->name('installments.alipay');
     // 分期付款支付前端同步回调
     Route::get('installments/alipay/return', 'InstallmentsController@alipayReturn')->name('installments.alipay.return');
+    // 分期付款微信支付
+    Route::get('installments/{installment}/wechat', 'InstallmentsController@payByWechat')->name('installments.wechat');
 });
 
 // 支付宝异步通知
@@ -109,3 +111,6 @@ Route::post('payment/wechat/refund_notify', 'PaymentController@wechatRefundNotif
 
 // 分期付款异步通知
 Route::post('installments/alipay/notify', 'InstallmentsController@alipayNotify')->name('installments.alipay.notify');
+
+// 分期付款微信支付异步通知
+Route::post('installments/wechat/notify', 'InstallmentsController@wechatNotify')->name('installments.wechat.notify');
