@@ -16,4 +16,19 @@ class InstallmentsController extends Controller
 
         return view('installments.index', compact('installments'));
     }
+
+    // 获取分期付款详情
+    public function show(Installment $installment)
+    {
+        // 校验是否属于当前用户
+        $this->authorize('own', $installment);
+
+        // 获取分期付款对应的商品，并按照分期期数排序
+        $items = $installment->items()->orderBy('sequence')->get();
+
+        // 下一个未完成的还款计划
+        $nextItem = $items->where('sequence', $installment->next_sequence)->first();
+
+        return view('installments.show', compact('installment', 'items', 'nextItem'));
+    }
 }
