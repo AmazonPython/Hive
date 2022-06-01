@@ -87,6 +87,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // 分期付款
     Route::post('payment/{order}/installment', 'PaymentController@payByInstallment')->name('payment.installment');
+
+    // 查看分期付款计划
+    Route::get('installments', 'InstallmentsController@index')->name('installments.index');
 });
 
 // 支付宝异步通知
