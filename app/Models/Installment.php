@@ -79,4 +79,25 @@ class Installment extends Model
 
         return false;
     }
+
+    // 封装分期付款退款操作
+    public function refreshRefundStatus()
+    {
+        $allSuccess = true;
+
+        // 重新加载 items，保证与数据库中的 items 一致
+        $this->load(['items']);
+
+        // 如果原本不支持退款，而现在支持了
+        foreach ($this->items as $item) {
+            if ($item->paid_at && $item->refund_status !== InstallmentItem::REFUND_STATUS_SUCCESS) {
+                $allSuccess = false;
+                break;
+            }
+        }
+
+        if ($allSuccess) {
+            $this->order->update(['refund_status' => Order::REFUND_STATUS_SUCCESS]);
+        }
+    }
 }

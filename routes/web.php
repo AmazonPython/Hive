@@ -114,3 +114,6 @@ Route::post('installments/alipay/notify', 'InstallmentsController@alipayNotify')
 
 // 分期付款微信支付异步通知
 Route::post('installments/wechat/notify', 'InstallmentsController@wechatNotify')->name('installments.wechat.notify');
+
+// 分期付款微信退款异步通知
+Route::post('installments/wechat/refund_notify', 'InstallmentsController@wechatRefundNotify')->name('installments.wechat.refund_notify');
