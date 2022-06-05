@@ -77,13 +77,13 @@ php artisan admin:create-user
 ```
 # 邮件配置 (如果环境支持 mailhog 则使用 .env 默认配置，否则需要自行配置)
 MAIL_DRIVER=smtp
-MAIL_HOST=smtp.{mailsite.com | example qq.com}
-MAIL_PORT={mailport | example 465}
-MAIL_USERNAME={mailuser | example Root}
-MAIL_PASSWORD={mailpass | example 123456}
+MAIL_HOST=smtp.{example qq.com}
+MAIL_PORT={example 465}
+MAIL_USERNAME={example Root}
+MAIL_PASSWORD={example 123456}
 MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS={mailaddress | example 123@qq.com}
-MAIL_FROM_NAME={mailname | example "Hive Store"}
+MAIL_FROM_ADDRESS={example 123@qq.com}
+MAIL_FROM_NAME={example "Hive Store"}
 
 # 支付宝配置信息
 ALIPAY_APP_ID=202100011760...
@@ -106,7 +106,7 @@ NGROK_URL=http://{分配给你的域名}.ngrok.io
 ```
 队列与定时任务配置
 ```
-# 队列配置 如果运行环境不支持 Redis 则在 .env 文件中将 QUEUE_CONNECTION=redis 改为 QUEUE_CONNECTION=database
+# 队列配置 如果运行环境不支持 Redis 则在 .env 文件中将 QUEUE_CONNECTION= 中的 redis 改为 database
 php artisan queue:work 
 # 定时任务配置
 cron:calculate-installment-fine
