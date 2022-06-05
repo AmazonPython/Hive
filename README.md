@@ -7,58 +7,113 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About Hive Store：一个基于 Laravel 开发的开源商城
+### 功能简介
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 用户登录、注册功能
+- 邮件发送功能
+- 用户地址管理功能
+- 用户角色权限管理功能
+- 商品 SKU 分类、属性、属性值管理
+- 购物车功能
+- 订单管理功能
+- 订单流水号的生成功能
+- 订单发货功能
+- 订单退款功能
+- 分期付款、支付宝、微信支付功能
+- 商品分类、商品管理功能
+- 商品评论功能
+- 商品收藏功能
+- 商品搜索功能
+- 高并发下减商品库存功能
+- 商品销量统计功能
+- 商品评分统计功能
+- 优惠券功能
+- 众筹功能
+- 异步队列任务
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 使用流程
+克隆项目
+```
+git clone git@github.com:AmazonPython/Hive.git
+```
+转到项目目录
+```
+cd Hive
+```
+安装 PHP 依赖
+```
+composer install
+```
+安装 Nodejs 依赖
+```
+npm install && npm run dev
+```
+复制配置文件：
+```
+cp .env.example .env
+```
+生成密钥
+```
+php artisan key:generate
+```
+生成图片软连接
+```
+php artisan storage:link
+```
+运行数据库迁移
+```
+php artisan migrate
+```
+导入后台管理数据
+```
+php artisan db:seed --class=AdminTablesSeeder
+```
+创建后台管理员账号
+```
+php artisan admin:create-user
+```
+.env 文件配置：
+```
+# 邮件配置 (如果环境支持 mailhog 则使用 .env 默认配置，否则需要自行配置)
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.{mailsite.com | example qq.com}
+MAIL_PORT={mailport | example 465}
+MAIL_USERNAME={mailuser | example Root}
+MAIL_PASSWORD={mailpass | example 123456}
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS={mailaddress | example 123@qq.com}
+MAIL_FROM_NAME={mailname | example "Hive Store"}
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# 支付宝配置信息
+ALIPAY_APP_ID=202100011760...
+ALIPAY_PUBLIC_KEY="MIIBIjANB..."
+ALIPAY_PRIVATE_KEY="MIIEpAIBAA..."
 
-## Learning Laravel
+# 微信支付配置信息
+# 公众号 app id
+WECHAT_PAY_APP_ID=wx7f8f8f8f8f8f8...
+# 商户号
+WECHAT_PAY_MCH_ID=1419000...
+# 商户密钥
+WECHAT_PAY_KEY="e10adc3949ba59abbe56e057f..."
+# API 证书路径 resource/wechat文件夹下
+WECHAT_CERT=cert文件完整文件名
+WECHAT_CERT_KEY=文件完整文件名
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# 内网穿透配置信息
+NGROK_URL=http://{分配给你的域名}.ngrok.io
+```
+队列与定时任务配置
+```
+# 队列配置 如果运行环境不支持 Redis 则在 .env 文件中将 QUEUE_CONNECTION=redis 改为 QUEUE_CONNECTION=database
+php artisan queue:work 
+# 定时任务配置
+cron:calculate-installment-fine
+cron:finish-crowdfunding
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+如果您发现该项目中存在安全漏洞，请将问题提交至此项目。我会尽快解决所有安全漏洞。
 
 ## License
-
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
