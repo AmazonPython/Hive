@@ -7,7 +7,8 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Hive Store：一个基于 Laravel 开发的开源商城
+## Hive Store: 一个基于 Laravel 开发的开源商城
+
 ### 功能简介
 
 - 用户登录、注册功能
@@ -33,6 +34,7 @@
 - 异步队列任务
 
 ### 使用流程
+
 克隆项目
 ```
 git clone git@github.com:AmazonPython/Hive.git
@@ -72,6 +74,7 @@ php artisan db:seed --class=AdminTablesSeeder
 创建后台管理员账号
 ```
 php artisan admin:create-user
+后台地址：http://your_domain/admin
 ```
 .env 文件配置：
 ```
@@ -112,6 +115,10 @@ php artisan queue:work
 cron:calculate-installment-fine
 cron:finish-crowdfunding
 ```
+
+### 提示
+
+配置微信支付需要商户号，如果没有资质可以仅配置支付宝沙箱账号。本项目为展示项目，为避免不必要的麻烦，线上地址不支持真实支付，以免资金纠纷。若对本项目感兴趣可将其克隆到本地，配置相关文件并浏览效果。也可以直接上线服务器环境。
 
 如果您发现该项目中存在安全漏洞，请将问题提交至此项目。我会尽快解决所有安全漏洞。
 
