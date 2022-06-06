@@ -25,11 +25,9 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
-      run: mysql -h 127.0.0.1 -u root -e "create database laravel"
-    - name: Run migration
-      run: php artisan migrate
-    - name: Import data
-      run: php artisan db:seed --class=AdminTablesSeeder
+      run: |
+        mkdir -p database
+        touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
